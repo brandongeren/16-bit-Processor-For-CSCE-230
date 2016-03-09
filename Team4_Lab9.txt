@@ -1,3 +1,5 @@
+Group 4: Brandon Geren, Kevin Henry, Michael Shanahan
+
 Part 1 Questions
 1. What are control flags?
 2. Which control flags are set during an Add instruction (Think of flags that control
