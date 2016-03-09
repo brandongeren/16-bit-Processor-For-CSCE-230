@@ -17,9 +17,9 @@ Part 2 Questions
 /*TA told me i didnt need the process stuff that would be above this begin*/
   BEGIN
     IF(X = '01') THEN
-      y <= '00;
+      y <= '0;
     ELSIF (x = '10') THEN
-      y <= '01';
+      y <= '1';
     ELSE
       x <= '00';
     END IF;
