@@ -1,0 +1,31 @@
+Quartus II Archive log --	Z:/230 labs/Team4Project/Team4_Project.qarlog
+
+Archive:	Z:/230 labs/Team4Project/Team4_Project.qar
+Date:		Wed Mar 09 16:34:50 2016
+Quartus II 32-bit		11.1 Build 173 11/01/2011 SJ Web Edition
+
+	=========== Files Selected: ===========
+Z:/230 labs/Team4Project/16BITXOR.bdf
+Z:/230 labs/Team4Project/16BITnot.bdf
+Z:/230 labs/Team4Project/16bitand.bdf
+Z:/230 labs/Team4Project/16bitor.bdf
+Z:/230 labs/Team4Project/ALU.bdf
+Z:/230 labs/Team4Project/FourToOneSixteenBit.vhd
+Z:/230 labs/Team4Project/OneBitAdder.bdf
+Z:/230 labs/Team4Project/SixteenBitRealAdder.bdf
+Z:/230 labs/Team4Project/SixteenBySixteenRegister.bdf
+Z:/230 labs/Team4Project/SixteenBySixteenRegister.do
+Z:/230 labs/Team4Project/Team4_Project.qpf
+Z:/230 labs/Team4Project/Team4_Project.qsf
+Z:/230 labs/Team4Project/a2to1SixteenBitMultiplexor.vhd
+Z:/230 labs/Team4Project/decoder16.vhd
+Z:/230 labs/Team4Project/incremental_db/compiled_partitions/Team4_Project.db_info
+Z:/230 labs/Team4Project/lpm_constant0.vhd
+Z:/230 labs/Team4Project/mux16.vhd
+Z:/230 labs/Team4Project/reg16.vhd
+Z:/230 labs/Team4Project/variouslogic5.bdf
+c:/altera/11.1/quartus/bin/assignment_defaults.qdf
+	======= Total: 20 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.

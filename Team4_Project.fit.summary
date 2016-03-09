@@ -1,0 +1,16 @@
+Fitter Status : Successful - Wed Mar 09 16:33:43 2016
+Quartus II 32-bit Version : 11.1 Build 173 11/01/2011 SJ Web Edition
+Revision Name : Team4_Project
+Top-level Entity Name : SixteenBySixteenRegister
+Family : Cyclone II
+Device : EP2C5F256C6
+Timing Models : Final
+Total logic elements : 343 / 4,608 ( 7 % )
+    Total combinational functions : 343 / 4,608 ( 7 % )
+    Dedicated logic registers : 240 / 4,608 ( 5 % )
+Total registers : 240
+Total pins : 63 / 158 ( 40 % )
+Total virtual pins : 0
+Total memory bits : 0 / 119,808 ( 0 % )
+Embedded Multiplier 9-bit elements : 0 / 26 ( 0 % )
+Total PLLs : 0 / 2 ( 0 % )
