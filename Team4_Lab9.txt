@@ -2,8 +2,10 @@ Group 4: Brandon Geren, Kevin Henry, Michael Shanahan
 
 Part 1 Questions
 1. What are control flags?
+  Control flags exist to tell the control unit what to do and where to send data.
 2. Which control flags are set during an Add instruction (Think of flags that control
 the ALU and Register File)?
+  e a inv, b inv, alu op, and write enable 
 Part 2 Questions
 1. How do you end an if statement in VHDL?
 2. Why should a control unit be sequential?
