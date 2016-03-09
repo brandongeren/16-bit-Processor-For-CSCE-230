@@ -1,3 +1,15 @@
+Part 1 Questions
 1. What are control flags?
 2. Which control flags are set during an Add instruction (Think of flags that control
 the ALU and Register File)?
+Part 2 Questions
+1. How do you end an if statement in VHDL?
+2. Why should a control unit be sequential?
+3. How do you check if the clock is on the rising edge in VHDL?
+4. How would you write the following C Code in VHDL?
+Final Questions
+1. What components are used in stage 3 of our processor? Remember, stage 3 is the
+execute stage.
+2. What should alu op be set to for an XOR instruction?
+3. What happens when reset is 1?
+4. What control signal is assigned in stage 5 for a Sub instruction?
