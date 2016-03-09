@@ -17,11 +17,11 @@ Part 2 Questions
 /*TA told me i didnt need the process stuff that would be above this begin*/
   BEGIN
     IF(X = '01') THEN
-      y = '00;
+      y <= '00;
     ELSIF (x = '10') THEN
-      y = '01';
+      y <= '01';
     ELSE
-      x = '00';
+      x <= '00';
     END IF;
   END PROCESS;
 END behavior;
@@ -33,3 +33,4 @@ execute stage.
 3. What happens when reset is 1?
   it sets the stage to 0 so that it can start a new instruction
 4. What control signal is assigned in stage 5 for a Sub instruction?
+  rf_write<=’1’;
