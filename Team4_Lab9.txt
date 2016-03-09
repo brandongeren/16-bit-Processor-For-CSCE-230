@@ -31,4 +31,5 @@ execute stage.
 2. What should alu op be set to for an XOR instruction?
 00000
 3. What happens when reset is 1?
+  it sets the stage to 0 so that it can start a new instruction
 4. What control signal is assigned in stage 5 for a Sub instruction?
