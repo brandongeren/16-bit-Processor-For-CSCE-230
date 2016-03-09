@@ -29,5 +29,6 @@ Final Questions
 1. What components are used in stage 3 of our processor? Remember, stage 3 is the
 execute stage.
 2. What should alu op be set to for an XOR instruction?
+00000
 3. What happens when reset is 1?
 4. What control signal is assigned in stage 5 for a Sub instruction?
