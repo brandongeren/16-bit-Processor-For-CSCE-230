@@ -8,9 +8,23 @@ the ALU and Register File)?
   e a inv, b inv, alu op, and write enable 
 Part 2 Questions
 1. How do you end an if statement in VHDL?
+  Each IF statement needs an END IF; to stop the process
 2. Why should a control unit be sequential?
+  Processes may need to be completed in a certain order to ensure that the program operates correctly
 3. How do you check if the clock is on the rising edge in VHDL?
+  ELSIF(rising_edge(Clock)) THEN 
 4. How would you write the following C Code in VHDL?
+/*TA told me i didnt need the process stuff that would be above this begin*/
+  BEGIN
+    IF(X = '01') THEN
+      y = '00;
+    ELSIF (x = '10') THEN
+      y = '01';
+    ELSE
+      x = '00';
+    END IF;
+  END PROCESS;
+END behavior;
 Final Questions
 1. What components are used in stage 3 of our processor? Remember, stage 3 is the
 execute stage.
