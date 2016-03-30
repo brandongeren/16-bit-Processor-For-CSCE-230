@@ -20,5 +20,9 @@ begin
 			regsOut <= src;
 			regtOut <= dst;
 		end if;
+		if(opCode(4 downto 0) = "10001") then
+			regsOut <= src;
+			regtOut <= "1111";
+		end if;
 	end process;
 end arch;
