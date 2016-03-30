@@ -6,9 +6,7 @@ BOOK: https://drive.google.com/file/d/0Bwg4aVBWF7hGaktEcEkza3NzNUE/view?usp=shar
 
 R0 = 0
 
-R14: RA
-
-R15: PC
+R15: RA
 
 In instruction address generator, muxINC is a multiplexor to select what to increment the PC by
 
