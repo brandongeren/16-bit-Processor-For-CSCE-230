@@ -91,27 +91,30 @@ BEGIN
 					--double operand
 					IF(opCode(2 downto 0) = "000") THEN
 						--xor
-						alu_op <= "01";
+						alu_op <= "10";
 					ELSIF(opCode(2 downto 0) = "001") THEN
 						--or
-						alu_op <= "10";
+						alu_op <= "01";
 					ELSIF(opCode(2 downto 0) = "010") THEN
 						--and
-						alu_op <= "11";
+						alu_op <= "00";
 					ELSIF(opCode(2 downto 0) = "011") THEN
 						--add
-						alu_op <= "00";
+						alu_op <= "11";
 					ELSIF(opCode(2 downto 0) = "100") THEN
 						--sub
-						alu_op <= "00";
-						b_inv <= '0';
+						alu_op <= "11";
+						b_inv <= '1';
 					END IF;
 					--single operand
 					ELSIF(opCode(4) = '0' AND opCode(3) = '1') THEN
 						IF(opCode(2 downto 0) = "001") THEN
 							--INC
-							alu_op <= "00";
+							alu_op <= "11";
 							b_select <= '1';
+							--the next line sets immediate to 1
+                     --check immediate.vhd for more detail
+                     extend <=  "10";
 						END IF;
 				END IF;
 			ELSIF(stage = 4) THEN
