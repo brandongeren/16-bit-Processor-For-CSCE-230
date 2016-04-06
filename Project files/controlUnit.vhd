@@ -116,6 +116,15 @@ BEGIN
                      --check immediate.vhd for more detail
                      extend <=  "10";
 						END IF;
+						IF(opCode(2 downto 0) = "000") THEN
+							--DEC
+							alu_op <= "11";
+							b_select <= '1';
+							b_inv <= '1';
+							--the next line sets immediate to 1
+                     --check immediate.vhd for more detail
+                     extend <=  "10";
+						END IF;
 				END IF;
 			ELSIF(stage = 4) THEN
 				--double operand
