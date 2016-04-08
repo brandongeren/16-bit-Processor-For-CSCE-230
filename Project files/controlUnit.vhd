@@ -76,6 +76,8 @@ BEGIN
 				ma_select <= '1';
 				mem_read <= '1';
 				mem_write <= '0';
+				--never modify pc select. the RA input to the Instruction Address Generator will not be used
+				--in order to return to RA, do a command of jr r15. r15 is the return address.
 				pc_select <= '1';
 				pc_enable <= mfc;
 				inc_select <= '0';
@@ -105,7 +107,17 @@ BEGIN
 						--sub
 						alu_op <= "11";
 						b_inv <= '1';
-					END IF;
+					ELSIF(opCode(2 downto 0) = "111") THEN
+						--st
+						alu_op <= "11";
+						extend <= "01";
+						b_select <= '1';						
+					ELSIF(opCode(2 downto 0) = "110") THEN
+						--ld
+						alu_op <= "11";
+						extend <= "01";
+						b_select <= '1';
+					END IF;					
 					--single operand
 					ELSIF(opCode(4) = '0' AND opCode(3) = '1') THEN
 						IF(opCode(2 downto 0) = "001") THEN
@@ -113,36 +125,99 @@ BEGIN
 							alu_op <= "11";
 							b_select <= '1';
 							--the next line sets immediate to 1
-                     --check immediate.vhd for more detail
-                     extend <=  "10";
-						END IF;
-						IF(opCode(2 downto 0) = "000") THEN
+							--check immediate.vhd for more detail
+							extend <=  "10";
+						ELSIF(opCode(2 downto 0) = "000") THEN
 							--DEC
 							alu_op <= "11";
 							b_select <= '1';
 							b_inv <= '1';
-							--the next line sets immediate to 1
-                     --check immediate.vhd for more detail
-                     extend <=  "10";
+							extend <=  "10";
+						ELSIF(opCode(2 downto 0) = "011") THEN
+							--clr
+							--requires immediate value of 000000
+							alu_op <= "00";
+							b_select <= '1';
+							extend <=  "00";
+						ELSIF(opCode(2 downto 0) = "010") THEN
+							--jr
+							--requires immediate value of 000000
+							alu_op <= "11";
+							b_select <= '1';
+							extend <=  "00";
+							
+							--Note to self: put the following 2 into a later stage
 						END IF;
-				END IF;
+					ELSIF(opCode(4) = '1' AND opCode(3) = '0') THEN
+						--jump code
+						IF (Z = '1') THEN
+							IF(opCode(2 downto 0) = "000") THEN
+								--jump
+								inc_select <= '1';
+							ELSIF(opCode(2 downto 0) = "001") THEN
+								--need to set return address to old pc
+								--j.l
+								pc_enable<='1';
+								inc_select <= '1';	
+							END IF;
+						END IF;
+					END IF;
 			ELSIF(stage = 4) THEN
 				--double operand
 				IF(opCode(4) = '0' AND opCode(3) = '0') THEN
 					--TODO
-				--single operand
+					--single operand
+					IF(opCode(2 downto 0) = "110") THEN
+						--ld
+						y_select <= "01";
+						mem_read <= '1';
+						ma_select <= '0';
+					ELSIF(opCode(2 downto 0) = "111") THEN
+						--st
+						mem_write <= '1';
+						ma_select <= '0';
+					END IF;
 				ELSIF(opCode(4) = '0' AND opCode(3) = '1') THEN
 					--TODO
+					ELSIF(opCode(2 downto 0) = "010") THEN
+						--jr
+						pc_select <= '0';
+						pc_enable <= '1';
+				ELSIF(opCode(4 downto 3) = "10") THEN
+					IF(opCode(2 downto 0) = "001") THEN
+						--j.l
+						y_select <= "10";
+						pc_enable <= '1';
+					ELSIF(opCode(2 downto 0) = "000") THEN
+						--j
+						pc_enable <= '1';					
+					END IF;	
 				END IF;
 			ELSIF(stage = 5) THEN
 				--Double operand
 				IF(opCode(4) = '0' AND opCode(3) = '0') THEN
-					rf_write <= '1';
+					IF NOT (opCode(2 downto 0) = "111") THEN
+						rf_write <= '1';
+					END IF;
 				--single operand
 				ELSIF(opCode(4) = '0' AND opCode(3) = '1') THEN
 					rf_write <= '1';
+						IF(opCode(2 downto 0) = "010") THEN
+							--jr
+							pc_select <= '1';
+							pc_enable <= '0';
+						END IF;
+				ELSIF(opCode(4 downto 3) = "10") THEN
+					--necessary for both jl and j to set pc enable to 0 in stage 5
+					pc_enable <= '0';
+					IF(opCode(2 downto 0) = "001") THEN
+						--j.l
+						rf_write <= '1';
+						c_select <= "00";
+						pc_enable <= '0';
+					END IF;
 				END IF;
-			END IF;
+			END IF;		
 		END IF;
 	END PROCESS;
 
