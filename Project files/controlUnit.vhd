@@ -47,12 +47,120 @@ END controlUnit;
 ARCHITECTURE behavior OF controlUnit IS
 
 signal wmfc :  std_logic ;
+signal failedCondition :   std_logic;
 shared variable stage: integer :=  0;
 
 BEGIN
 	PROCESS(clock ,  reset)
 	BEGIN
-		IF(rising_edge(clock)) THEN
+		IF(falling_edge(clock)) THEN
+			IF(Cond(3 downto 0) = "0000")) THEN
+				--Always
+				failedCondition <= '0';
+			ELSIF(Cond(3 downto 0) = "0001")) THEN
+				--Never
+				failedCondition <= '0';
+			ELSIF(Cond(3 downto 0) = "0010")) THEN
+				--equal
+				IF(Z = '1') THEN
+					failedCondition <= '0';
+				ELSE
+					failedCondition <= '1';
+				End IF;
+			ELSIF(Cond(3 downto 0) = "0011")) THEN
+				-- Not equal
+				IF(Z = '0') THEN
+					failedCondition <= '1';
+				ELSE
+					failedCondition <= '0';
+				End IF;	
+			ELSIF(Cond(3 downto 0) = "0100")) THEN
+				--Overflow
+				IF(V = '1') THEN
+					failedCondition <= '0';
+				ELSE
+					failedCondition <= '1';
+				End IF;
+			ELSIF(Cond(3 downto 0) = "0010")) THEN
+				--No Overflow
+				IF(V = '0') THEN
+					failedCondition <= '0';
+				ELSE
+					failedCondition <= '1';
+				End IF;	
+			ELSIF(Cond(3 downto 0) = "0110")) THEN
+				--Negative
+				IF(N = '1') THEN
+					failedCondition <= '0';
+				ELSE
+					failedCondition <= '1';
+				End IF;
+			ELSIF(Cond(3 downto 0) = "0111")) THEN
+				--Positive or Zero
+				IF(N = '0') THEN
+					failedCondition <= '0';
+				ELSE
+					failedCondition <= '1';
+				End IF;
+			ELSIF(Cond(3 downto 0) = "1111")) THEN
+				--Less than or equal
+				IF(Z = '1' or (((N = '1' and(V = '0'))or((Z = '0')and v = '1')))) THEN
+					failedCondition <= '0';
+				ELSE
+					failedCondition <= '1';
+				End IF;	
+			ELSIF(Cond(3 downto 0) = "1110")) THEN
+				--Greater than or equal
+				IF((N = '1' and V = '1') or ((N = '0')and(V = '1'))) THEN
+					failedCondition <= '0';
+				ELSE
+					failedCondition <= '1';
+				End IF;
+			ELSIF(Cond(3 downto 0) = "1110")) THEN
+				--Less than
+				IF((N = '1' and (V = '0')) or ((Z = '0')and(V = '1'))) THEN
+					failedCondition <= '0';
+				ELSE
+					failedCondition <= '1';
+				End IF;
+			ELSIF(Cond(3 downto 0) = "1000") THEN
+				--Unsigned Higher or same
+				IF(C = '1') THEN
+					failedCondition <= '0';
+				ELSE
+					failedCondition <= '1';
+				END IF;
+			ELSIF(Cond(3 downto 0) = "1001") THEN
+				--Unsigned lower
+				IF(C = '0') THEN
+					failedCondition <= '0';
+				ELSE
+					failedCondition <= '1';
+				END IF;
+			ELSIF(Cond(3 downto 0) = "1010") THEN
+				--Unsigned higher
+				IF(C = '1' and Z = '0') THEN
+					failedCondition <= '0';
+				ELSE
+					failedCondition <= '1';
+				END IF;
+			ELSIF(Cond(3 downto 0) = "1011") THEN
+				--Unsigned lower or same
+				IF(C = '0' or Z = '1') THEN
+					failedCondition <= '0';
+				ELSE
+					failedCondition <= '1';
+				END IF;
+			ELSIF(Cond(3 downto 0) = "1100") THEN
+				--Greater than
+				IF(Z = '0' and ((N = '1' and V = '1') or (N = '0' and V = '0'))) THEN
+					failedCondition <= '0';
+				ELSE
+					failedCondition <= '1';
+				END IF;
+			END IF;
+		END IF;
+		ELSIF(rising_edge(clock)) THEN
 			IF(reset = '1') THEN
 				stage := 0;
 			END IF;
