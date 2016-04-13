@@ -150,17 +150,15 @@ BEGIN
 						END IF;
 					ELSIF(opCode(4) = '1' AND opCode(3) = '0') THEN
 						--jump code
-						IF (Z = '1') THEN
-							IF(opCode(2 downto 0) = "000") THEN
-								--jump
-								inc_select <= '1';
-								pc_enable<='1';
-							ELSIF(opCode(2 downto 0) = "001") THEN
-								--need to set return address to old pc
-								--j.l
-								inc_select <= '1';	
-								pc_enable<='1';
-							END IF;
+						IF(opCode(2 downto 0) = "000") THEN
+							--jump
+							inc_select <= '1';
+							pc_enable<='1';
+						ELSIF(opCode(2 downto 0) = "001") THEN
+							--need to set return address to old pc
+							--j.l
+							inc_select <= '1';	
+							pc_enable<='1';
 						END IF;
 					END IF;
 			ELSIF(stage = 4) THEN
@@ -193,8 +191,9 @@ BEGIN
 						inc_select <= '0';
 					ELSIF(opCode(2 downto 0) = "000") THEN
 						--j
-						pc_enable <= '0';	
-						inc_select <= '0';			
+						y_select <= "10";
+						pc_enable <= '0';
+						inc_select <= '0';
 					END IF;	
 				END IF;
 			ELSIF(stage = 5) THEN
@@ -202,6 +201,8 @@ BEGIN
 				IF(opCode(4) = '0' AND opCode(3) = '0') THEN
 					IF NOT (opCode(2 downto 0) = "111") THEN
 						rf_write <= '1';
+					ELSIF(opCode(2 downto 0) = "111") THEN
+						rf_write <= '0';
 					END IF;
 				--single operand
 				ELSIF(opCode(4) = '0' AND opCode(3) = '1') THEN
@@ -210,6 +211,7 @@ BEGIN
 							--jr
 							pc_select <= '1';
 							pc_enable <= '0';
+							rf_write <= '0';
 						END IF;
 				ELSIF(opCode(4 downto 3) = "10") THEN
 					--necessary for both jl and j to set pc enable to 0 in stage 5
