@@ -154,11 +154,12 @@ BEGIN
 							IF(opCode(2 downto 0) = "000") THEN
 								--jump
 								inc_select <= '1';
+								pc_enable<='1';
 							ELSIF(opCode(2 downto 0) = "001") THEN
 								--need to set return address to old pc
 								--j.l
-								pc_enable<='1';
 								inc_select <= '1';	
+								pc_enable<='1';
 							END IF;
 						END IF;
 					END IF;
@@ -179,18 +180,21 @@ BEGIN
 					END IF;
 				ELSIF(opCode(4) = '0' AND opCode(3) = '1') THEN
 					--TODO
-					ELSIF(opCode(2 downto 0) = "010") THEN
+					IF(opCode(2 downto 0) = "010") THEN
 						--jr
 						pc_select <= '0';
 						pc_enable <= '1';
+					END IF;
 				ELSIF(opCode(4 downto 3) = "10") THEN
 					IF(opCode(2 downto 0) = "001") THEN
 						--j.l
 						y_select <= "10";
-						pc_enable <= '1';
+						pc_enable <= '0';
+						inc_select <= '0';
 					ELSIF(opCode(2 downto 0) = "000") THEN
 						--j
-						pc_enable <= '1';					
+						pc_enable <= '0';	
+						inc_select <= '0';			
 					END IF;	
 				END IF;
 			ELSIF(stage = 5) THEN
@@ -214,7 +218,6 @@ BEGIN
 						--j.l
 						rf_write <= '1';
 						c_select <= "00";
-						pc_enable <= '0';
 					END IF;
 				END IF;
 			END IF;		
