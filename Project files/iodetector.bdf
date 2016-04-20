@@ -992,16 +992,6 @@ applicable agreement for further details.
 	(pt 608 688)
 )
 (connector
-	(pt 488 688)
-	(pt 480 688)
-	(bus)
-)
-(connector
-	(pt 480 744)
-	(pt 480 688)
-	(bus)
-)
-(connector
 	(pt 896 328)
 	(pt 896 640)
 )
@@ -1032,19 +1022,24 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "y_select[0]" (rect 360 752 415 764)(font "Arial" ))
-	(pt 392 744)
-	(pt 480 744)
-	(bus)
-)
-(connector
-	(text "y_select[1]" (rect 384 656 439 668)(font "Arial" ))
-	(pt 384 672)
-	(pt 424 672)
-	(bus)
-)
-(connector
-	(pt 472 672)
 	(pt 488 672)
-	(bus)
+	(pt 472 672)
+)
+(connector
+	(pt 488 688)
+	(pt 488 720)
+)
+(connector
+	(text "y_select[0]" (rect 442 704 497 716)(font "Arial" ))
+	(pt 488 720)
+	(pt 432 720)
+)
+(connector
+	(text "y_select[1]" (rect 376 648 431 660)(font "Arial" ))
+	(pt 424 672)
+	(pt 392 672)
+)
+(connector
+	(pt 392 664)
+	(pt 392 672)
 )
