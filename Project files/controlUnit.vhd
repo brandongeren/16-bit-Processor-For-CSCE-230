@@ -54,69 +54,69 @@ BEGIN
 	PROCESS(clock ,  reset)
 	BEGIN
 		IF(falling_edge(clock)) THEN
-			IF(Cond(3 downto 0) = "0000")) THEN
+			IF(Cond(3 downto 0) = "0000") THEN
 				--Always
 				failedCondition <= '0';
-			ELSIF(Cond(3 downto 0) = "0001")) THEN
+			ELSIF(Cond(3 downto 0) = "0001") THEN
 				--Never
 				failedCondition <= '0';
-			ELSIF(Cond(3 downto 0) = "0010")) THEN
+			ELSIF(Cond(3 downto 0) = "0010") THEN
 				--equal
 				IF(Z = '1') THEN
 					failedCondition <= '0';
 				ELSE
 					failedCondition <= '1';
 				End IF;
-			ELSIF(Cond(3 downto 0) = "0011")) THEN
+			ELSIF(Cond(3 downto 0) = "0011") THEN
 				-- Not equal
 				IF(Z = '0') THEN
 					failedCondition <= '1';
 				ELSE
 					failedCondition <= '0';
 				End IF;	
-			ELSIF(Cond(3 downto 0) = "0100")) THEN
+			ELSIF(Cond(3 downto 0) = "0100") THEN
 				--Overflow
 				IF(V = '1') THEN
 					failedCondition <= '0';
 				ELSE
 					failedCondition <= '1';
 				End IF;
-			ELSIF(Cond(3 downto 0) = "0010")) THEN
+			ELSIF(Cond(3 downto 0) = "0010") THEN
 				--No Overflow
 				IF(V = '0') THEN
 					failedCondition <= '0';
 				ELSE
 					failedCondition <= '1';
 				End IF;	
-			ELSIF(Cond(3 downto 0) = "0110")) THEN
+			ELSIF(Cond(3 downto 0) = "0110") THEN
 				--Negative
 				IF(N = '1') THEN
 					failedCondition <= '0';
 				ELSE
 					failedCondition <= '1';
 				End IF;
-			ELSIF(Cond(3 downto 0) = "0111")) THEN
+			ELSIF(Cond(3 downto 0) = "0111") THEN
 				--Positive or Zero
 				IF(N = '0') THEN
 					failedCondition <= '0';
 				ELSE
 					failedCondition <= '1';
 				End IF;
-			ELSIF(Cond(3 downto 0) = "1111")) THEN
+			ELSIF(Cond(3 downto 0) = "1111") THEN
 				--Less than or equal
 				IF(Z = '1' or (((N = '1' and(V = '0'))or((Z = '0')and v = '1')))) THEN
 					failedCondition <= '0';
 				ELSE
 					failedCondition <= '1';
 				End IF;	
-			ELSIF(Cond(3 downto 0) = "1110")) THEN
+			ELSIF(Cond(3 downto 0) = "1110") THEN
 				--Greater than or equal
 				IF((N = '1' and V = '1') or ((N = '0')and(V = '1'))) THEN
 					failedCondition <= '0';
 				ELSE
 					failedCondition <= '1';
 				End IF;
-			ELSIF(Cond(3 downto 0) = "1110")) THEN
+			ELSIF(Cond(3 downto 0) = "1110") THEN
 				--Less than
 				IF((N = '1' and (V = '0')) or ((Z = '0')and(V = '1'))) THEN
 					failedCondition <= '0';
@@ -159,7 +159,7 @@ BEGIN
 					failedCondition <= '1';
 				END IF;
 			END IF;
-		END IF;
+		--END IF;
 		ELSIF(rising_edge(clock)) THEN
 			IF(reset = '1') THEN
 				stage := 0;
@@ -213,6 +213,10 @@ BEGIN
 						alu_op <= "11";
 					ELSIF(opCode(2 downto 0) = "100") THEN
 						--sub
+						alu_op <= "11";
+						b_inv <= '1';
+					ELSIF(opCode(2 downto 0) = "101") THEN
+						--cmp
 						alu_op <= "11";
 						b_inv <= '1';
 					ELSIF(opCode(2 downto 0) = "111") THEN
@@ -307,9 +311,9 @@ BEGIN
 			ELSIF(stage = 5) THEN
 				--Double operand
 				IF(opCode(4) = '0' AND opCode(3) = '0') THEN
-					IF NOT (opCode(2 downto 0) = "111") THEN
+					IF NOT (opCode(2 downto 0) = "111" or opCode(2 downto 0) = "101") THEN
 						rf_write <= '1';
-					ELSIF(opCode(2 downto 0) = "111") THEN
+					ELSIF(opCode(2 downto 0) = "111" or opCode(2 downto 0) = "101") THEN
 						rf_write <= '0';
 					END IF;
 				--single operand
